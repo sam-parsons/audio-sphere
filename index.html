@@ -26,12 +26,25 @@ FEATURES
 
         <!-- environment - sphere -->
         <a-sky src="#bg" rotation="0 0 0" color="#6EBAA7" radius="14" metalness="0.1" roughness="1">
-            <a-sphere color="yellow" position="0 0 0" sound="distanceModel: exponential; loop: true; volume: 4; src: #s1; autoplay: true"></a-sphere>
-            <a-sphere color="yellow" position="0 14 0" sound="distanceModel: exponential; loop: true; volume: 4; src: #s2; autoplay: true"></a-sphere>
-            <a-sphere color="yellow" position="0 -14 0" sound="distanceModel: exponential; loop: true; volume: 4; src: #s3; autoplay: true"></a-sphere>
-            <a-sphere color="yellow" position="14 0 0" sound="distanceModel: exponential; loop: true; volume: 4; src: #s4; autoplay: true"></a-sphere>
-            <a-sphere color="yellow" position="-14 0 0" sound="distanceModel: exponential; loop: true; volume: 4; src: #s5; autoplay: true"></a-sphere>
-            <a-sphere color="yellow" position="0 0 14" sound="distanceModel: exponential; loop: true; volume: 4; src: #s6; autoplay: true"></a-sphere>
+            <a-sphere color="yellow" position="0 0 0" sound="distanceModel: exponential; loop: true; volume: 4; src: #s1; autoplay: true">
+
+              <a-animation attribute="position" to="0 2 0" repeat="indefinite" dur="50" direction="alternate" easing="linear"></a-animation>
+            </a-sphere>
+            <a-sphere color="yellow" position="0 14 0" sound="distanceModel: exponential; loop: true; volume: 4; src: #s2; autoplay: true">
+              <a-animation attribute="position" to="0 13 0" repeat="indefinite" dur="33" easing="linear"></a-animation>
+            </a-sphere>
+            <a-sphere color="yellow" position="0 -14 0" sound="distanceModel: exponential; loop: true; volume: 4; src: #s3; autoplay: true">
+              <a-animation attribute="position" to="2 -14 0" repeat="indefinite" dur="60" direction="alternate" easing="linear"></a-animation>
+            </a-sphere>
+            <a-sphere color="yellow" position="14 0 0" sound="distanceModel: exponential; loop: true; volume: 4; src: #s4; autoplay: true">
+              <a-animation attribute="position" to="14 2 0" repeat="indefinite" direction="alternate" easing="linear" dur="36"></a-animation>
+            </a-sphere>
+            <a-sphere color="yellow" position="-14 0 0" sound="distanceModel: exponential; loop: true; volume: 4; src: #s5; autoplay: true">
+              <a-animation attribute="position" to="0 2 0" repeat="indefinite" direction="alternate" easing="linear"></a-animation>
+            </a-sphere>
+            <a-sphere color="yellow" position="0 0 14" sound="distanceModel: exponential; loop: true; volume: 4; src: #s6; autoplay: true">
+              <a-animation attribute="position" to="-2 2 14" repeat="indefinite" direction="alternate" easing="linear"></a-animation>
+            </a-sphere>
             <a-sphere color="yellow" position="0 0 -14" sound="distanceModel: exponential; loop: true; volume: 4; src: #s7; autoplay: true"></a-sphere>
           <a-animation attribute="rotation" to="0 360 0" repeat="indefinite" easing="linear" dur="150000"></a-animation>
         </a-sky>
