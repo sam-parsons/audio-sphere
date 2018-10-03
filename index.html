@@ -4,11 +4,13 @@ FEATURES
 - write a component that can mute and unmute the sounds either
 ----- altogether or separately (latter preferable)
 - have to account for sound changes and whether certain nodes are muted
+- see about muting all with double-click events listener?
 -->
 
 <html>
   <head>
     <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v4.2.0/dist/aframe-extras.min.js"></script>
   </head>
   <body>
     <a-scene>
@@ -28,7 +30,6 @@ FEATURES
           <audio class="audioNodes" id="t5" src="/assets/5.mp3"></audio>
           <audio class="audioNodes" id="t6" src="/assets/6.mp3"></audio>
           <audio class="audioNodes" id="t7" src="/assets/7.mp3"></audio>
-          aduio
         </a-assets>
 
         <!-- spheres -->
@@ -40,29 +41,39 @@ FEATURES
               <a-animation attribute="position" to="0 2 0" repeat="indefinite" dur="50" direction="alternate" easing="linear"></a-animation>
             </a-sphere> -->
             <a-box id="centerSphere" color="red" position="0 0 0"></a-box>
-            <a-sphere color="yellow" position="0 14 0" sound="distanceModel: exponential; loop: true; volume: 4; autoplay: true; src: #s1">
+            <a-sphere color="yellow" position="0 14 0" sound="distanceModel: exponential">
+              <a-sound src="src: #s1" autoplay="false" volume="4" loop="true" on="mousemove"></a-sound>
               <a-animation attribute="position" to="0 13 0" repeat="indefinite" dur="33" easing="linear"></a-animation>
             </a-sphere>
-            <a-sphere color="yellow" position="0 -14 0" sound="distanceModel: exponential; loop: true; volume: 4; autoplay: true; src: #s2">
+            <a-sphere color="yellow" position="0 -14 0" sound="distanceModel: exponential">
+              <a-sound src="src: #s2" autoplay="false" volume="4" loop="true" on="mousemove"></a-sound>
               <a-animation attribute="position" to="2 -14 0" repeat="indefinite" dur="60" direction="alternate" easing="linear"></a-animation>
             </a-sphere>
-            <a-sphere color="yellow" position="14 0 0" sound="distanceModel: exponential; loop: true; volume: 4; autoplay: true; src: #s3">
+            <a-sphere color="yellow" position="14 0 0" sound="distanceModel: exponential">
+              <a-sound src="src: #s3" autoplay="false" volume="4" loop="true" on="mousemove"></a-sound>
               <a-animation attribute="position" to="14 2 0" repeat="indefinite" direction="alternate" easing="linear" dur="36"></a-animation>
             </a-sphere>
-            <a-sphere color="yellow" position="-14 0 0" sound="distanceModel: exponential; loop: true; volume: 4; autoplay: true; src: #s4">
+            <a-sphere color="yellow" position="-14 0 0" sound="distanceModel: exponential">
+              <a-sound src="src: #s4" autoplay="false" volume="4" loop="true" on="mousemove"></a-sound>
               <a-animation attribute="position" to="0 2 0" repeat="indefinite" direction="alternate" easing="linear"></a-animation>
             </a-sphere>
-            <a-sphere color="yellow" position="0 0 14" sound="distanceModel: exponential; loop: true; volume: 4; autoplay: true; src: #s5">
+            <a-sphere color="yellow" position="0 0 14" sound="distanceModel: exponential">
+              <a-sound src="src: #s5" autoplay="false" volume="4" loop="true" on="mousemove"></a-sound>
               <a-animation attribute="position" to="-2 2 14" repeat="indefinite" direction="alternate" easing="linear"></a-animation>
             </a-sphere>
-            <a-sphere color="yellow" position="0 0 -14" sound="distanceModel: exponential; loop: true; volume: 4; autoplay: true; src: #s6"></a-sphere>
+            <a-sphere color="yellow" position="0 0 -14" sound="distanceModel: exponential">
+              <a-sound src="src: #s6" autoplay="false" volume="4" loop="true" on="mousemove"></a-sound>
+            </a-sphere>
+            
           <a-animation attribute="rotation" to="0 360 0" repeat="indefinite" easing="linear" dur="150000"></a-animation>
         </a-sky>
 
         <!-- camera -->
-        <a-entity camera look-controls wasd-controls="fly: true">
-            <a-cursor></a-cursor>
-        </a-entity camera look-controls wasd-controls>
+        <a-entity id="rig" movement-controls="fly: true">
+          <a-entity camera look-controls wasd-controls="fly: true">
+              <a-cursor></a-cursor>
+          </a-entity>
+        </a-entity>
 
     </a-scene>
     <script>
@@ -88,6 +99,23 @@ FEATURES
       const centerSphere = document.querySelector('#centerSphere');
 
       centerSphere.addEventListener('click', function(e) {
+        // initializing sounds if necessary
+        if(!centerSphere.classList.contains('initialized')) {
+          console.log('sounds initializing');
+          
+        } else {
+
+
+
+
+
+
+
+
+
+
+        }
+        
         console.log('attemping to change tracks');
         // have to account for if the individual nodes are muted or not
         if(centerSphere.classList.contains('flipped')) {
