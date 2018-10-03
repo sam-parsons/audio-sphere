@@ -3,6 +3,7 @@ FEATURES
 - enable fly on wasd-controls on camera
 - write a component that can mute and unmute the sounds either
 ----- altogether or separately (latter preferable)
+- have to account for sound changes and whether certain nodes are muted
 -->
 
 <html>
@@ -13,39 +14,48 @@ FEATURES
     <a-scene>
         <a-assets>
           <img id="bg" src="metallic.jpg">
-          <audio id="s1" src="/assets/1.m4a"></audio>
-          <audio id="s2" src="/assets/2.m4a"></audio>
-          <audio id="s3" src="/assets/3.m4a"></audio>
-          <audio id="s4" src="/assets/4.m4a"></audio>
-          <audio id="s5" src="/assets/5.m4a"></audio>
-          <audio id="s6" src="/assets/6.m4a"></audio>
-          <audio id="s7" src="/assets/7.m4a"></audio>
+          <audio class="audioNodes" id="s1" src="/assets/1.m4a"></audio>
+          <audio class="audioNodes" id="s2" src="/assets/2.m4a"></audio>
+          <audio class="audioNodes" id="s3" src="/assets/3.m4a"></audio>
+          <audio class="audioNodes" id="s4" src="/assets/4.m4a"></audio>
+          <audio class="audioNodes" id="s5" src="/assets/5.m4a"></audio>
+          <audio class="audioNodes" id="s6" src="/assets/6.m4a"></audio>
+          <audio class="audioNodes" id="s7" src="/assets/7.m4a"></audio>
+          <audio class="audioNodes" id="t1" src="/assets/1.mp3"></audio>
+          <audio class="audioNodes" id="t2" src="/assets/2.mp3"></audio>
+          <audio class="audioNodes" id="t3" src="/assets/3.mp3"></audio>
+          <audio class="audioNodes" id="t4" src="/assets/4.mp3"></audio>
+          <audio class="audioNodes" id="t5" src="/assets/5.mp3"></audio>
+          <audio class="audioNodes" id="t6" src="/assets/6.mp3"></audio>
+          <audio class="audioNodes" id="t7" src="/assets/7.mp3"></audio>
+          aduio
         </a-assets>
 
         <!-- spheres -->
 
         <!-- environment - sphere -->
         <a-sky src="#bg" rotation="0 0 0" color="#6EBAA7" radius="14" metalness="0.1" roughness="1">
-            <a-sphere color="yellow" position="0 0 0" sound="distanceModel: exponential; loop: true; volume: 4; src: #s1; autoplay: true">
+            <!-- <a-sphere color="yellow" position="0 0 0" sound="distanceModel: exponential; loop: true; volume: 4; src: #s1; autoplay: true">
 
               <a-animation attribute="position" to="0 2 0" repeat="indefinite" dur="50" direction="alternate" easing="linear"></a-animation>
-            </a-sphere>
-            <a-sphere color="yellow" position="0 14 0" sound="distanceModel: exponential; loop: true; volume: 4; src: #s2; autoplay: true">
+            </a-sphere> -->
+            <a-box id="centerSphere" color="red" position="0 0 0"></a-box>
+            <a-sphere color="yellow" position="0 14 0" sound="distanceModel: exponential; loop: true; volume: 4; autoplay: true; src: #s1">
               <a-animation attribute="position" to="0 13 0" repeat="indefinite" dur="33" easing="linear"></a-animation>
             </a-sphere>
-            <a-sphere color="yellow" position="0 -14 0" sound="distanceModel: exponential; loop: true; volume: 4; src: #s3; autoplay: true">
+            <a-sphere color="yellow" position="0 -14 0" sound="distanceModel: exponential; loop: true; volume: 4; autoplay: true; src: #s2">
               <a-animation attribute="position" to="2 -14 0" repeat="indefinite" dur="60" direction="alternate" easing="linear"></a-animation>
             </a-sphere>
-            <a-sphere color="yellow" position="14 0 0" sound="distanceModel: exponential; loop: true; volume: 4; src: #s4; autoplay: true">
+            <a-sphere color="yellow" position="14 0 0" sound="distanceModel: exponential; loop: true; volume: 4; autoplay: true; src: #s3">
               <a-animation attribute="position" to="14 2 0" repeat="indefinite" direction="alternate" easing="linear" dur="36"></a-animation>
             </a-sphere>
-            <a-sphere color="yellow" position="-14 0 0" sound="distanceModel: exponential; loop: true; volume: 4; src: #s5; autoplay: true">
+            <a-sphere color="yellow" position="-14 0 0" sound="distanceModel: exponential; loop: true; volume: 4; autoplay: true; src: #s4">
               <a-animation attribute="position" to="0 2 0" repeat="indefinite" direction="alternate" easing="linear"></a-animation>
             </a-sphere>
-            <a-sphere color="yellow" position="0 0 14" sound="distanceModel: exponential; loop: true; volume: 4; src: #s6; autoplay: true">
+            <a-sphere color="yellow" position="0 0 14" sound="distanceModel: exponential; loop: true; volume: 4; autoplay: true; src: #s5">
               <a-animation attribute="position" to="-2 2 14" repeat="indefinite" direction="alternate" easing="linear"></a-animation>
             </a-sphere>
-            <a-sphere color="yellow" position="0 0 -14" sound="distanceModel: exponential; loop: true; volume: 4; src: #s7; autoplay: true"></a-sphere>
+            <a-sphere color="yellow" position="0 0 -14" sound="distanceModel: exponential; loop: true; volume: 4; autoplay: true; src: #s6"></a-sphere>
           <a-animation attribute="rotation" to="0 360 0" repeat="indefinite" easing="linear" dur="150000"></a-animation>
         </a-sky>
 
@@ -55,5 +65,47 @@ FEATURES
         </a-entity camera look-controls wasd-controls>
 
     </a-scene>
+    <script>
+      const scene = document.querySelector('a-scene');
+
+      const orbs = document.querySelectorAll('a-sphere');
+      for (let i = 0; i < orbs.length; i++) {
+        orbs[i].addEventListener('click', function(e) {
+          console.log('action fired');
+          if (orbs[i].classList.contains('muted')) {
+            console.log(orbs[i].attributes);
+            orbs[i].attributes['sound'].nodeValue = "distanceModel: exponential; loop: true; volume: 4; src: #s${i+1}; autoplay: true";
+            orbs[i].classList.remove('muted');
+          } else {
+            
+            orbs[i].classList.add('muted');
+            console.log(orbs[i].attributes);
+            orbs[i].attributes['sound'].nodeValue = "distanceModel: exponential; loop: true; volume: 0; src: #s${i+1}; autoplay: true";
+          }
+        })
+      }
+
+      const centerSphere = document.querySelector('#centerSphere');
+
+      centerSphere.addEventListener('click', function(e) {
+        console.log('attemping to change tracks');
+        // have to account for if the individual nodes are muted or not
+        if(centerSphere.classList.contains('flipped')) {
+          for(let i = 0; i < orbs.length; i++) {
+
+            const temp = 's' + (i+1);
+            orbs[i].attributes['sound'].nodeValue = "distanceModel: exponential; loop: true; volume: 4; autoplay: true; src: #" + temp;
+          }
+          centerSphere.classList.remove('flipped');
+        } else {
+          for(let i = 0; i < orbs.length; i++) {
+
+            const temp = 't' + (i+1);
+            orbs[i].attributes['sound'].nodeValue = "distanceModel: exponential; loop: true; volume: 4; autoplay: true; src: #" + temp;
+          }
+          centerSphere.classList.add('flipped');
+        }
+      })
+    </script>
   </body>
 </html>
