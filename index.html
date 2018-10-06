@@ -11,9 +11,10 @@ FEATURES
   <head>
     <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v4.2.0/dist/aframe-extras.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.2.0/dist/aframe-physics-system.min.js"></script>
   </head>
   <body>
-    <a-scene>
+    <a-scene physics>
         <a-assets>
           <img id="bg" src="metallic.jpg">
           <audio class="audioNodes" id="s1" src="/assets/1.m4a"></audio>
@@ -68,9 +69,21 @@ FEATURES
           <a-animation attribute="rotation" to="0 360 0" repeat="indefinite" easing="linear" dur="150000"></a-animation>
         </a-sky>
 
+        <!-- planes of boundary -->
+        <!-- planes for box -->
+        <a-plane static-body color="green" height="2" width="2" position="0 -2 0" rotation="-90 0 0"></a-plane>
+        <a-plane static-body position="0 0 -14" height="28" width="28" color="green"></a-plane>
+        <a-plane static-body position="0 0 14" height="28" width="28" color="green" rotation="0 180 0"></a-plane>
+        <a-plane static-body position="0 -14 0" height="28" width="28" color="green" rotation="-90 0 0"></a-plane>
+        <a-plane static-body position="0 14 0" height="28" width="28" color="green" rotation="90 0 0"></a-plane>
+        <a-plane static-body position="14 0 0" height="28" width="28" color="green" rotation="0 270 0"></a-plane>
+        <a-plane static-body position="-14 0 0" height="28" width="28" color="green" rotation="0 90 0"></a-plane>
+
         <!-- camera -->
-        <a-entity id="rig" movement-controls="fly: true">
+        <a-entity id="rig" kinematic-body movement-controls="fly: true">
+
           <a-entity camera look-controls wasd-controls="fly: true">
+              <a-box kinematic-body visible="true"></a-box>
               <a-cursor></a-cursor>
           </a-entity>
         </a-entity>
